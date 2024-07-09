@@ -1,15 +1,7 @@
 function love.load()
-    snakeSegments = {
-        {x = 3, y = 1},
-        {x = 2, y = 1},
-        {x = 1, y = 1},
-    }
 
     gridXCount = 20
     gridYCount = 15
-    timer = 0
-
-    directionQueue = {'right'}
 
     foodPosition = {
         x = love.math.random(1, gridXCount), 
@@ -41,8 +33,19 @@ function love.load()
         ]
     end
 
-    moveFood()
-    snakeAlive = true
+    function reset()
+        snakeSegments = {
+            {x = 3, y = 1},
+            {x = 2, y = 1},
+            {x = 1, y = 1},
+        }
+        directionQueue = {'right'}
+        snakeAlive = true
+        timer = 0
+        moveFood()
+    end
+
+    reset()
 end
 
 function love.update(dt)
