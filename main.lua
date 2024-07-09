@@ -9,7 +9,6 @@ function love.load()
     gridYCount = 15
     timer = 0
 
-    -- Removed: direction = 'right'
     directionQueue = {'right'}
 
     foodPosition = {
@@ -80,16 +79,31 @@ function love.update(dt)
             end
         end
 
-        table.insert(snakeSegments, 1, {
-            x = nextXPosition, y = nextYPosition
-        })
+        local canMove = true
 
-        if snakeSegments[1].x == foodPosition.x
-        and snakeSegments[1].y == foodPosition.y then
-            moveFood()
-        else
-            table.remove(snakeSegments)
+        for segmentIndex, segment in ipairs(snakeSegments) do
+            if segmentIndex ~= #snakeSegments
+            and nextXPosition == segment.x 
+            and nextYPosition == segment.y then
+                canMove = false
+            end
         end
+
+        if canMove then
+            table.insert(snakeSegments, 1, {
+                x = nextXPosition, y = nextYPosition
+            })
+
+            if snakeSegments[1].x == foodPosition.x
+            and snakeSegments[1].y == foodPosition.y then
+                moveFood()
+            else
+                table.remove(snakeSegments)
+            end
+        else
+            love.load()
+        end
+        
     end
 end
 
