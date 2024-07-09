@@ -16,6 +16,16 @@ function love.load()
         x = love.math.random(1, gridXCount), 
         y = love.math.random(1, gridYCount),
     }
+
+    function moveFood()
+        foodPosition = {
+            x = love.math.random(1, gridXCount),
+            y = love.math.random(1, gridYCount),
+        }
+    end
+
+    moveFood()
+
 end
 
 function love.update(dt)
@@ -55,7 +65,13 @@ function love.update(dt)
         table.insert(snakeSegments, 1, {
             x = nextXPosition, y = nextYPosition
         })
-        table.remove(snakeSegments)
+
+        if snakeSegments[1].x == foodPosition.x
+        and snakeSegments[1].y == foodPosition.y then
+            moveFood()
+        else
+            table.remove(snakeSegments)
+        end
     end
 end
 
