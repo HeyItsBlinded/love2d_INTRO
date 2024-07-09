@@ -5,6 +5,8 @@ function love.load()
         {x = 1, y = 1},
     }
 
+    gridXCount = 20
+    gridYCount = 15
     timer = 0
 
     -- Removed: direction = 'right'
@@ -25,12 +27,24 @@ function love.update(dt)
 
         if directionQueue[1] == 'right' then
             nextXPosition = nextXPosition + 1
+            if nextXPosition > gridXCount then
+                nextXPosition = 1
+            end
         elseif directionQueue[1] == 'left' then
             nextXPosition = nextXPosition - 1
+            if nextXPosition < 1 then
+                nextXPosition = gridXCount
+            end
         elseif directionQueue[1] == 'down' then
             nextYPosition = nextYPosition + 1
+            if nextYPosition > gridYCount then
+                nextYPosition = 1
+            end
         elseif directionQueue[1] == 'up' then
             nextYPosition = nextYPosition - 1
+            if nextYPosition < 1 then
+                nextYPosition = gridYCount
+            end
         end
 
         table.insert(snakeSegments, 1, {
@@ -64,8 +78,6 @@ function love.keypressed(key)
 end
 
 function love.draw()
-    local gridXCount = 20
-    local gridYCount = 15
     local cellSize = 15
 
     love.graphics.setColor(.28, .28, .28)
