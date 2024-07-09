@@ -1,8 +1,12 @@
 function love.load()
+    gridXCount = 35
+    gridYCount = 30
+    cellSize = 20
 
-    gridXCount = 20
-    gridYCount = 15
+    -- locks game window to gridX and gridY values
+    love.window.setMode(gridXCount * cellSize, gridYCount * cellSize)
 
+    -- determines where food generates
     foodPosition = {
         x = love.math.random(1, gridXCount), 
         y = love.math.random(1, gridYCount),
@@ -39,7 +43,7 @@ function love.load()
             {x = 2, y = 1},
             {x = 1, y = 1},
         }
-        directionQueue = {'right'}
+        directionQueue = {'d'}
         snakeAlive = true
         timer = 0
         moveFood()
@@ -62,22 +66,22 @@ function love.update(dt)
             local nextXPosition = snakeSegments[1].x
             local nextYPosition = snakeSegments[1].y
 
-            if directionQueue[1] == 'right' then
+            if directionQueue[1] == 'd' then
                 nextXPosition = nextXPosition + 1
                 if nextXPosition > gridXCount then
                     nextXPosition = 1
                 end
-            elseif directionQueue[1] == 'left' then
+            elseif directionQueue[1] == 'a' then
                 nextXPosition = nextXPosition - 1
                 if nextXPosition < 1 then
                     nextXPosition = gridXCount
                 end
-            elseif directionQueue[1] == 'down' then
+            elseif directionQueue[1] == 's' then
                 nextYPosition = nextYPosition + 1
                 if nextYPosition > gridYCount then
                     nextYPosition = 1
                 end
-            elseif directionQueue[1] == 'up' then
+            elseif directionQueue[1] == 'w' then
                 nextYPosition = nextYPosition - 1
                 if nextYPosition < 1 then
                     nextYPosition = gridYCount
@@ -115,30 +119,30 @@ function love.update(dt)
 end
 
 function love.keypressed(key)
-    if key == 'right'
-    and directionQueue[#directionQueue] ~= 'right'
-    and directionQueue[#directionQueue] ~= 'left' then
-        table.insert(directionQueue, 'right')
+    if key == 'd'
+    and directionQueue[#directionQueue] ~= 'd'
+    and directionQueue[#directionQueue] ~= 'a' then
+        table.insert(directionQueue, 'd')
 
-    elseif key == 'left'
-    and directionQueue[#directionQueue] ~= 'left'
-    and directionQueue[#directionQueue] ~= 'right' then
-        table.insert(directionQueue, 'left')
+    elseif key == 'a'
+    and directionQueue[#directionQueue] ~= 'a'
+    and directionQueue[#directionQueue] ~= 'd' then
+        table.insert(directionQueue, 'a')
 
-    elseif key == 'up'
-    and directionQueue[#directionQueue] ~= 'up'
-    and directionQueue[#directionQueue] ~= 'down' then
-        table.insert(directionQueue, 'up')
+    elseif key == 'w'
+    and directionQueue[#directionQueue] ~= 'w'
+    and directionQueue[#directionQueue] ~= 's' then
+        table.insert(directionQueue, 'w')
 
-    elseif key == 'down'
-    and directionQueue[#directionQueue] ~= 'down'
-    and directionQueue[#directionQueue] ~= 'up' then
-        table.insert(directionQueue, 'down')
+    elseif key == 's'
+    and directionQueue[#directionQueue] ~= 's'
+    and directionQueue[#directionQueue] ~= 'w' then
+        table.insert(directionQueue, 's')
     end
 end
 
 function love.draw()
-    local cellSize = 15
+    local cellSize = 20
 
     love.graphics.setColor(.28, .28, .28)
     love.graphics.rectangle(
@@ -168,14 +172,21 @@ function love.draw()
         drawCell(segment.x, segment.y)
     end
 
-    -- Temporary
-    for directionIndex, direction in ipairs(directionQueue) do
-        love.graphics.setColor(1, 1, 1)
-        love.graphics.print(
-            'directionQueue['..directionIndex..']: '..direction,
-            15, 15 * directionIndex
-        )
-    end
+    -- DEBUG: display directionQueue
+    -- for directionIndex, direction in ipairs(directionQueue) do
+    --     love.graphics.setColor(1, 1, 1)
+    --     love.graphics.print(
+    --         'directionQueue['..directionIndex..']: '..direction,
+    --         15, 10
+    --     )
+    -- end
+
+    -- DEBUG: display snakeSegments
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print(
+        'snakeSegments: '..tostring(#snakeSegments),
+        15, 30
+    )
 
     -- food position
     love.graphics.setColor(1, 0.3, 0.3)
