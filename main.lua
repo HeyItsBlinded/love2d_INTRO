@@ -157,7 +157,11 @@ function love.draw()
     end
 
     for segmentIndex, segment in ipairs(snakeSegments) do
-        love.graphics.setColor(.6, 1, .32)
+        if snakeAlive then
+            love.graphics.setColor(.6, 1, .32)
+        else
+            love.graphics.setColor(0.5, 0.5, 0.5)
+        end
         drawCell(segment.x, segment.y)
     end
 
