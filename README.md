@@ -1,3 +1,5 @@
-# love2d_INTRO
+# kim learns love2d
 
-tutorial - https://berbasoft.com/simplegametutorials/love/snake/
+original - https://berbasoft.com/simplegametutorials/love/snake/
+
+changes: wasd controls, speed increases incrementally, score appears in game window
