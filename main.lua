@@ -41,9 +41,9 @@ function love.load()
 
     function reset()
         snakeSegments = {
-            {x = 3, y = 1},
-            {x = 2, y = 1},
-            {x = 1, y = 1},
+            {x = 3, y = gridYCount/2},
+            {x = 2, y = gridYCount/2},
+            {x = 1, y = gridYCount/2},
         }
         directionQueue = {'d'}
         snakeAlive = true
