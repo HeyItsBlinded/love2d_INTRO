@@ -128,7 +128,7 @@ function love.update(dt)
                 snakeAlive = false
             end
         end
-        
+
     elseif timer >= 2 then
         love.load()
     end
@@ -181,7 +181,7 @@ function love.draw()
 
     for segmentIndex, segment in ipairs(snakeSegments) do
         if snakeAlive then
-            love.graphics.setColor(.6, 1, .32)
+            love.graphics.setColor(love.math.colorFromBytes(196, 138, 255))
         else
             love.graphics.setColor(0.5, 0.5, 0.5)
         end
