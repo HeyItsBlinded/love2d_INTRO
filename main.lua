@@ -58,8 +58,20 @@ end
 function love.update(dt)
     timer = timer + dt
 
-    if snakeAlive and #snakeSegments < 10 then
-        if timer >= 0.15 then
+    if snakeAlive then
+        local interval
+
+        if #snakeSegments < 10 then
+            interval = 0.15
+        elseif #snakeSegments < 20 then
+            interval = 0.10
+        elseif #snakeSegments < 30 then
+            interval = 0.05
+        else
+            interval = 0.05
+        end
+
+        if timer >= interval then
             timer = 0
 
             if #directionQueue > 1 then
@@ -115,190 +127,8 @@ function love.update(dt)
             else
                 snakeAlive = false
             end
-
         end
-    
-    elseif snakeAlive and #snakeSegments < 20 then
-        if timer >= 0.10 then
-            timer = 0
-
-            if #directionQueue > 1 then
-                table.remove(directionQueue, 1)
-            end
-
-            local nextXPosition = snakeSegments[1].x
-            local nextYPosition = snakeSegments[1].y
-
-            if directionQueue[1] == 'd' then
-                nextXPosition = nextXPosition + 1
-                if nextXPosition > gridXCount then
-                    nextXPosition = 1
-                end
-            elseif directionQueue[1] == 'a' then
-                nextXPosition = nextXPosition - 1
-                if nextXPosition < 1 then
-                    nextXPosition = gridXCount
-                end
-            elseif directionQueue[1] == 's' then
-                nextYPosition = nextYPosition + 1
-                if nextYPosition > gridYCount then
-                    nextYPosition = 1
-                end
-            elseif directionQueue[1] == 'w' then
-                nextYPosition = nextYPosition - 1
-                if nextYPosition < 1 then
-                    nextYPosition = gridYCount
-                end
-            end
-
-            local canMove = true
-
-            for segmentIndex, segment in ipairs(snakeSegments) do
-                if segmentIndex ~= #snakeSegments
-                and nextXPosition == segment.x
-                and nextYPosition == segment.y then
-                    canMove = false
-                end
-            end
-
-            if canMove then
-                table.insert(snakeSegments, 1, {
-                    x = nextXPosition, y = nextYPosition
-                })
-
-                if snakeSegments[1].x == foodPosition.x
-                and snakeSegments[1].y == foodPosition.y then
-                    moveFood()
-                else
-                    table.remove(snakeSegments)
-                end
-            else
-                snakeAlive = false
-            end
-
-        end
-    
-    elseif snakeAlive and #snakeSegments < 30 then
-        if timer >= 0.05 then
-            timer = 0
-
-            if #directionQueue > 1 then
-                table.remove(directionQueue, 1)
-            end
-
-            local nextXPosition = snakeSegments[1].x
-            local nextYPosition = snakeSegments[1].y
-
-            if directionQueue[1] == 'd' then
-                nextXPosition = nextXPosition + 1
-                if nextXPosition > gridXCount then
-                    nextXPosition = 1
-                end
-            elseif directionQueue[1] == 'a' then
-                nextXPosition = nextXPosition - 1
-                if nextXPosition < 1 then
-                    nextXPosition = gridXCount
-                end
-            elseif directionQueue[1] == 's' then
-                nextYPosition = nextYPosition + 1
-                if nextYPosition > gridYCount then
-                    nextYPosition = 1
-                end
-            elseif directionQueue[1] == 'w' then
-                nextYPosition = nextYPosition - 1
-                if nextYPosition < 1 then
-                    nextYPosition = gridYCount
-                end
-            end
-
-            local canMove = true
-
-            for segmentIndex, segment in ipairs(snakeSegments) do
-                if segmentIndex ~= #snakeSegments
-                and nextXPosition == segment.x
-                and nextYPosition == segment.y then
-                    canMove = false
-                end
-            end
-
-            if canMove then
-                table.insert(snakeSegments, 1, {
-                    x = nextXPosition, y = nextYPosition
-                })
-
-                if snakeSegments[1].x == foodPosition.x
-                and snakeSegments[1].y == foodPosition.y then
-                    moveFood()
-                else
-                    table.remove(snakeSegments)
-                end
-            else
-                snakeAlive = false
-            end
-
-        end
-
-    elseif snakeAlive and #snakeSegments >= 30 then
-        if timer >= 0.05 then
-            timer = 0
-
-            if #directionQueue > 1 then
-                table.remove(directionQueue, 1)
-            end
-
-            local nextXPosition = snakeSegments[1].x
-            local nextYPosition = snakeSegments[1].y
-
-            if directionQueue[1] == 'd' then
-                nextXPosition = nextXPosition + 1
-                if nextXPosition > gridXCount then
-                    nextXPosition = 1
-                end
-            elseif directionQueue[1] == 'a' then
-                nextXPosition = nextXPosition - 1
-                if nextXPosition < 1 then
-                    nextXPosition = gridXCount
-                end
-            elseif directionQueue[1] == 's' then
-                nextYPosition = nextYPosition + 1
-                if nextYPosition > gridYCount then
-                    nextYPosition = 1
-                end
-            elseif directionQueue[1] == 'w' then
-                nextYPosition = nextYPosition - 1
-                if nextYPosition < 1 then
-                    nextYPosition = gridYCount
-                end
-            end
-
-            local canMove = true
-
-            for segmentIndex, segment in ipairs(snakeSegments) do
-                if segmentIndex ~= #snakeSegments
-                and nextXPosition == segment.x
-                and nextYPosition == segment.y then
-                    canMove = false
-                end
-            end
-
-            if canMove then
-                table.insert(snakeSegments, 1, {
-                    x = nextXPosition, y = nextYPosition
-                })
-
-                if snakeSegments[1].x == foodPosition.x
-                and snakeSegments[1].y == foodPosition.y then
-                    moveFood()
-                else
-                    table.remove(snakeSegments)
-                end
-            else
-                snakeAlive = false
-            end
-
-        end
-    
-    -- delay for game reset
+        
     elseif timer >= 2 then
         love.load()
     end
