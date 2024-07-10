@@ -1,3 +1,24 @@
+--[[ 
+food generation method breakdown
+1. foodPosition table defined
+2. moveFood() to position not occupied by snake
+
+if snakePosition[1] == foodPosition --> moveFood()
+if reset() --> moveFood()
+
+3. draw food
+----------------------
+for 2 foods:
+** keep above code
+1. food2Position table defined
+2. moveFood() to position not occupied by snake
+
+if snakePosition[1] == food2Position --> moveFood()
+if reset() --> moveFood()
+
+3. draw food
+]]
+
 function love.load()
     gridXCount = 40
     gridYCount = 40
@@ -10,6 +31,12 @@ function love.load()
 
     -- determines where food generates
     foodPosition = {
+        x = love.math.random(1, gridXCount), 
+        y = love.math.random(1, gridYCount),
+    }
+
+    -- food instance 2
+    food2Position = {
         x = love.math.random(1, gridXCount), 
         y = love.math.random(1, gridYCount),
     }
@@ -39,6 +66,32 @@ function love.load()
         ]
     end
 
+    -- moves food2 to positions not occupied by snake
+    function moveFood2()
+        local possibleFoodPositions = {}
+        for foodX = 1, gridXCount do 
+            for foodY = 1, gridYCount do 
+                local possible = true
+
+                for segmentIndex, segment in ipairs(snakeSegments) do 
+                    if foodX == segment.x and foodY == segment.y then
+                        possible = false
+                    end
+                end
+
+                if possible then
+                    table.insert(possibleFoodPositions, {x = foodX, y = foodY})
+                end
+
+            end
+        end
+
+        food2Position = possibleFoodPositions[
+            love.math.random(#possibleFoodPositions)
+        ]
+    end
+
+
     function reset()
         snakeSegments = {
             {x = 3, y = gridYCount/2},
@@ -50,6 +103,7 @@ function love.load()
         speed = 0.15
         timer = 0
         moveFood()
+        moveFood2()
     end
 
     reset()
@@ -122,9 +176,13 @@ function love.update(dt)
                 if snakeSegments[1].x == foodPosition.x
                 and snakeSegments[1].y == foodPosition.y then
                     moveFood()
+                elseif snakeSegments[1].x == food2Position.x
+                and snakeSegments[1].y == food2Position.y then
+                    moveFood2()
                 else
                     table.remove(snakeSegments)
                 end
+
             else
                 snakeAlive = false
             end
@@ -207,7 +265,22 @@ function love.draw()
         15, 30
     )
 
+    -- DEBUG: display food position
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print(
+        'Food Position: ('..foodPosition.x..', '..foodPosition.y..')',
+        15, 50
+    )
+
+    -- DEBUG: display food2 position
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.print(
+        'Food2 Position: ('..food2Position.x..', '..food2Position.y..')',
+        15, 65
+    )
+
     -- draw  (1 instance) food
     love.graphics.setColor(1, 0.3, 0.3) 
     drawCell(foodPosition.x, foodPosition.y)
+    drawCell(food2Position.x, food2Position.y)
 end
