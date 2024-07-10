@@ -1,6 +1,6 @@
 function love.load()
-    gridXCount = 35
-    gridYCount = 30
+    gridXCount = 40
+    gridYCount = 40
     cellSize = 20
 
     speed = 0.15
@@ -59,10 +59,11 @@ function love.update(dt)
     timer = timer + dt
 
     if snakeAlive then
-        local interval
+        interval = 0
 
         if #snakeSegments < 10 then
             interval = 0.15
+            -- add another fruit
         elseif #snakeSegments < 20 then
             interval = 0.10
         elseif #snakeSegments < 30 then
@@ -160,6 +161,7 @@ end
 function love.draw()
     local cellSize = 20
 
+    -- draw grid
     love.graphics.setColor(.28, .28, .28)
     love.graphics.rectangle(
         'fill',
@@ -179,6 +181,7 @@ function love.draw()
         )
     end
 
+    -- draw snake
     for segmentIndex, segment in ipairs(snakeSegments) do
         if snakeAlive then
             love.graphics.setColor(love.math.colorFromBytes(196, 138, 255))
@@ -204,7 +207,7 @@ function love.draw()
         15, 30
     )
 
-    -- food position
-    love.graphics.setColor(1, 0.3, 0.3)
+    -- draw  (1 instance) food
+    love.graphics.setColor(1, 0.3, 0.3) 
     drawCell(foodPosition.x, foodPosition.y)
 end
