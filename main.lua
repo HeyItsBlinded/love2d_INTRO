@@ -20,7 +20,9 @@ function love.load()
     gameoverSound = love.audio.newSource('gameover.mov', 'static')
 
     -- locks game window to gridX and gridY values
-    love.window.setMode(gridXCount * cellSize, gridYCount * cellSize)
+    windowX = gridXCount * cellSize
+    windowY = gridYCount * cellSize
+    love.window.setMode(windowX, windowY)
 
     -- determines where food generates
     foodPosition = {
@@ -64,31 +66,6 @@ function love.load()
         -- ]
     end
 
-    -- moves food2 to positions not occupied by snake
-    -- function moveFood2()
-    --     local possibleFoodPositions = {}
-    --     for foodX = 1, gridXCount do 
-    --         for foodY = 1, gridYCount do 
-    --             local possible = true
-
-    --             for segmentIndex, segment in ipairs(snakeSegments) do 
-    --                 if foodX == segment.x and foodY == segment.y then
-    --                     possible = false
-    --                 end
-    --             end
-
-    --             if possible then
-    --                 table.insert(possibleFoodPositions, {x = foodX, y = foodY})
-    --             end
-
-    --         end
-    --     end
-
-    --     food2Position = possibleFoodPositions[
-    --         love.math.random(#possibleFoodPositions)
-    --     ]
-    -- end
-
     function reset()
         snakeSegments = {
             {x = 3, y = gridYCount/2},
@@ -114,7 +91,6 @@ function love.update(dt)
 
         if #snakeSegments < 10 then
             interval = 0.15
-            -- add another fruit
         elseif #snakeSegments < 20 then
             interval = 0.10
         elseif #snakeSegments < 30 then
@@ -213,6 +189,10 @@ function love.keypressed(key)
     and directionQueue[#directionQueue] ~= 's'
     and directionQueue[#directionQueue] ~= 'w' then
         table.insert(directionQueue, 's')
+    -- elseif key == 'up' then
+    --     windowX = windowX + 10
+    --     windowY = windowY + 10
+    --     love.window.setMode(windowX, windowY)
     end
 end
 
@@ -225,8 +205,8 @@ function love.draw()
         'fill',
         0,
         0,
-        gridXCount * cellSize,
-        gridYCount * cellSize
+        windowX,
+        windowY
     )
 
     local function drawCell(x, y)
