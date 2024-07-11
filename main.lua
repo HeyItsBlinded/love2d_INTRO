@@ -17,6 +17,7 @@ function love.load()
     speed = 0.15
 
     eatSound = love.audio.newSource('beep.mp3', 'static')
+    gameoverSound = love.audio.newSource('gameover.mov', 'static')
 
     -- locks game window to gridX and gridY values
     love.window.setMode(gridXCount * cellSize, gridYCount * cellSize)
@@ -183,10 +184,11 @@ function love.update(dt)
 
             else
                 snakeAlive = false
+                love.audio.play(gameoverSound)
             end
         end
 
-    elseif timer >= 2 then
+    elseif timer >= 2.5 then
         love.load()
     end
 end
