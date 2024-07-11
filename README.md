@@ -7,4 +7,6 @@ changes
 * speed increases incrementally
 * score appears in game window
 * bigger game window
-* IN_DEV more fruit
+* more fruit (2, specifically)
+* IN_DEV sound
+* IN_DEV start and end screens
