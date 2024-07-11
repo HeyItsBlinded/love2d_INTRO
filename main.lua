@@ -16,6 +16,8 @@ function love.load()
 
     speed = 0.15
 
+    eatSound = love.audio.newSource('beep.mp3', 'static')
+
     -- locks game window to gridX and gridY values
     love.window.setMode(gridXCount * cellSize, gridYCount * cellSize)
 
@@ -170,9 +172,11 @@ function love.update(dt)
                 if snakeSegments[1].x == foodPosition.x
                 and snakeSegments[1].y == foodPosition.y then
                     moveFood(foodPosition)
+                    love.audio.play(eatSound)
                 elseif snakeSegments[1].x == food2Position.x
                 and snakeSegments[1].y == food2Position.y then
                     moveFood(food2Position)
+                    love.audio.play(eatSound)
                 else
                     table.remove(snakeSegments)
                 end
