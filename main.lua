@@ -17,6 +17,9 @@ if snakePosition[1] == food2Position --> moveFood()
 if reset() --> moveFood()
 
 3. draw food
+----------------------
+less is more food generation
+** keep above functionality but consolidate foodPosition and food2Position
 ]]
 
 function love.load()
