@@ -2,6 +2,7 @@
 
 based on - https://berbasoft.com/simplegametutorials/love/snake/
 eat sound - https://www.youtube.com/watch?v=B14L61fYZlc 
+boop sound - https://www.youtube.com/watch?v=w3MevX_jRQw 
 game over sound - https://www.youtube.com/watch?v=FVJJKIJWKdc 
 
 changes

@@ -18,6 +18,7 @@ function love.load()
 
     eatSound = love.audio.newSource('beep.mp3', 'static')
     gameoverSound = love.audio.newSource('gameover.mov', 'static')
+    collisionSound = love.audio.newSource('boop.mp3', 'static')
 
     -- locks game window to gridX and gridY values
     windowX = gridXCount * cellSize
@@ -83,6 +84,11 @@ function love.load()
     reset()
 end
 
+--[[
+checkpoint sound effect method breakdown
+* if #snakeSegments == desired score --> play sound once
+]]
+
 function love.update(dt)
     timer = timer + dt
 
@@ -94,6 +100,8 @@ function love.update(dt)
         elseif #snakeSegments < 20 then
             interval = 0.10
         elseif #snakeSegments < 30 then
+            interval = 0.075
+        elseif #snakeSegments < 40 then
             interval = 0.05
         else
             interval = 0.05
@@ -112,21 +120,25 @@ function love.update(dt)
             if directionQueue[1] == 'd' then
                 nextXPosition = nextXPosition + 1
                 if nextXPosition > gridXCount then
+                    love.audio.play(collisionSound)
                     nextXPosition = 1
                 end
             elseif directionQueue[1] == 'a' then
                 nextXPosition = nextXPosition - 1
                 if nextXPosition < 1 then
+                    love.audio.play(collisionSound)
                     nextXPosition = gridXCount
                 end
             elseif directionQueue[1] == 's' then
                 nextYPosition = nextYPosition + 1
                 if nextYPosition > gridYCount then
+                    love.audio.play(collisionSound)
                     nextYPosition = 1
                 end
             elseif directionQueue[1] == 'w' then
                 nextYPosition = nextYPosition - 1
                 if nextYPosition < 1 then
+                    love.audio.play(collisionSound)
                     nextYPosition = gridYCount
                 end
             end
