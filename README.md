@@ -1,8 +1,8 @@
 # kim learns love2d
 
-based on - https://berbasoft.com/simplegametutorials/love/snake/
-eat sound - https://www.youtube.com/watch?v=B14L61fYZlc 
-boop sound - https://www.youtube.com/watch?v=w3MevX_jRQw 
+based on - https://berbasoft.com/simplegametutorials/love/snake/ </br>
+eat sound - https://www.youtube.com/watch?v=B14L61fYZlc </br>
+boop sound - https://www.youtube.com/watch?v=w3MevX_jRQw </br>
 game over sound - https://www.youtube.com/watch?v=FVJJKIJWKdc 
 
 changes
