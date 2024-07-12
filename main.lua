@@ -146,6 +146,11 @@ function love.update(dt)
 end
 
 function love.keypressed(key)
+    -- quit game at any time with esc key
+    if key == 'escape' then
+        love.event.quit()
+    end
+
     if gameState == 'start' then
         if key == 'return' then
             gameState = 'game'
@@ -179,8 +184,18 @@ function love.draw()
     -- local cellSize = 20
 
     if gameState == 'start' then
+        love.graphics.setColor(.28, .28, .28)
+        love.graphics.rectangle(
+            'fill',
+            0,
+            0,
+            windowX,
+            windowY
+        )
+
         love.graphics.setColor(1, 1, 1)
         love.graphics.print("Press Enter to Start", windowX / 2 - 50, windowY / 2 - 10)
+        love.graphics.print("Use Esc to Quit", windowX / 2 - 50, windowY / 2 + 10)
 
     elseif gameState == 'game' then
         local cellSize = 20
