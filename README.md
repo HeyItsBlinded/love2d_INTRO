@@ -1,5 +1,11 @@
 # enhanced love2d snake game
 
+instructions: install love2d, then run this entire folder, not just the `main.lua` file
+
+<!-- 
+To see a demo of the project, watch this [video](https://www.youtube.com/watch?v=IQnaCLXEU0E).
+-->
+
 based on https://berbasoft.com/simplegametutorials/love/snake/ 
 
 eat sound - https://www.youtube.com/watch?v=B14L61fYZlc </br>
